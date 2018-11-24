@@ -1,0 +1,34 @@
+<div class='body'>
+    <div class='container'>
+
+        <p id="notice"><%= flash.notice %></p>
+
+<h2>User info</h2>
+
+<%= form_for(@user) do |f| %>
+
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name, class:"name" %>
+  </div>
+
+  <div class="field">
+    <label for="user_image">Image</label>
+    <%= f.attachment_field :profile_image, class:"user_image" %>
+  </div> 
+
+  <div class="field">
+    <%= f.label :introduction %>
+    <%= f.text_area :introduction, class:"introduction" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit 'Update User' %>
+  </div>
+<% end %>
+
+</div>
+</div>
+
+

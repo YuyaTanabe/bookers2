@@ -1,0 +1,49 @@
+<div class='body'>
+    <div class='container'>
+
+        <p id="notice"><%= flash.notice %></p>
+
+        <div class='row'>
+
+
+<div class='col-xs-3'>
+<!-- 左上 -->
+<%= render 'users/profile' %>
+
+<!-- 左下 -->
+<%= render 'books/post', new_book: @new_book %>
+
+  </div>
+
+<!-- 右 -->
+<div class='col-xs-9'>
+<h2>Users</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>image</th>
+      <th>name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% @users.each do |user| %>
+      <tr>
+        <td>
+            <%= attachment_image_tag user, :profile_image, fallback: "no_image.jpg", size: "50x50"  %>
+        </td>
+        <td><%= user.name %></td>
+        <td><%= link_to "Show", user_path(user.id), class:"user_#{user.id}" %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+</div>
+
+</div>
+
+</div>
+</div>
