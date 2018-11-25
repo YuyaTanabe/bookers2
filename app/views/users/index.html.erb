@@ -3,47 +3,79 @@
 
         <p id="notice"><%= flash.notice %></p>
 
-        <div class='row'>
+<!-- ↓↓全体↓↓ -->
+<div class='row'>
+    <!-- ↓↓左↓↓ -->
+    <div class='col-xs-3'>
+        <!-- ↓↓ 左上 ↓↓ -->
+        <h2>User info</h2>
+            <table class='table'>
+                <tr>
+                    <%= attachment_image_tag current_user, :profile_image, fallback: "no_image.jpg", size: "100x100" %>
+                </tr>
+                <tr>
+                    <th>name</th>
+                    <th><%= current_user.name %></th>
+                </tr>
+                <tr>
+                    <th>introduction</th>
+                    <th><%= current_user.introduction %></th>
+                </tr>
+            </table>
 
+            <div class='row'>
+                <%= link_to "", edit_user_path(current_user), class:"col-xs-12 btn btn-default glyphicon glyphicon-wrench edit_user_#{current_user.id}" %>
+            </div>
+        <!-- ↑↑ 左上 ↑↑ -->
 
-<div class='col-xs-3'>
-<!-- 左上 -->
-<%= render 'users/profile' %>
+        <!-- ↓↓ 左下 ↓↓ -->
+        <h2>New book</h2>
+        <%= form_for(@new_book) do |f| %>
+            <div class="field row">
+                <%= f.label :title %>
+                <%= f.text_field :title, class:"col-xs-12 book_title" %>
+            </div>
 
-<!-- 左下 -->
-<%= render 'books/post', new_book: @new_book %>
+            <div class="field row">
+                <%= f.label :opinion %>
+                <%= f.text_area :opinion, class:"col-xs-12 book_body" %>
+            </div>
 
-  </div>
+            <div class="actions row">
+                <%= f.submit 'Create Book', class:"btn btn-primary col-xs-12" %>
+            </div>
+        <% end %>
+        <!-- ↑↑ 左下 ↑↑ -->
+    </div>
+    <!-- ↑↑ 左 ↑↑ -->
 
-<!-- 右 -->
-<div class='col-xs-9'>
-<h2>Users</h2>
-
-<table class="table">
-  <thead>
-    <tr>
-      <th>image</th>
-      <th>name</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-  <% @users.each do |user| %>
-      <tr>
-        <td>
-            <%= attachment_image_tag user, :profile_image, fallback: "no_image.jpg", size: "50x50"  %>
-        </td>
-        <td><%= user.name %></td>
-        <td><%= link_to "Show", user_path(user.id), class:"user_#{user.id}" %></td>
-      </tr>
-  <% end %>
-  </tbody>
-</table>
-
+    <!-- ↓↓ 右 ↓↓ -->
+    <div class='col-xs-9'>
+        <h2>Users</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>image</th>
+                    <th>name</th>
+                    <th colspan="3"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @users.each do |user| %>
+                    <tr>
+                        <td>
+                            <%= attachment_image_tag user, :profile_image, fallback: "no_image.jpg", size: "50x50" %>
+                        </td>
+                        <td><%= user.name %></td>
+                        <td><%= link_to "Show", user_path(user.id), class:"user_#{user.id}" %></td>
+                    </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
+    <!-- ↑↑ 右 ↑↑ -->
 </div>
+<!-- ↑↑ 全体 ↑↑ -->
 
-</div>
-
-</div>
+    </div>
 </div>

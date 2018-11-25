@@ -1,76 +1,89 @@
 <div class='body'>
     <div class='container'>
 
+        <p id="notice"><%= flash.notice %></p>
 
-  <p id="notice"><%= flash.notice %></p>
+<!-- ↓↓全体↓↓ -->
+<div class='row'>
+    <!-- ↓↓左↓↓ -->
+    <div class='col-xs-3'>
+        <!-- ↓↓ 左上 ↓↓ -->
+        <h2>User info</h2>
+            <table class='table'>
+                <tr>
+                    <%= attachment_image_tag @book.user, :profile_image, fallback: "no_image.jpg", size: "100x100" %>
+                </tr>
+                <tr>
+                    <th>name</th>
+                    <th><%= @book.user.name %></th>
+                </tr>
+                <tr>
+                    <th>introduction</th>
+                    <th><%= @book.user.introduction %></th>
+                </tr>
+            </table>
 
+            <div class='row'>
+                <%= link_to "", edit_user_path(@book.user.id), class:"col-xs-12 btn btn-default glyphicon glyphicon-wrench edit_user_#{@book.user.id}" %>
+            </div>
+        <!-- ↑↑ 左上 ↑↑ -->
 
-        <div class='row'>
+        <!-- ↓↓ 左下 ↓↓ -->
+        <h2>New book</h2>
+        <%= form_for(@new_book) do |f| %>
+            <div class="field row">
+                <%= f.label :title %>
+                <%= f.text_field :title, class:"col-xs-12 book_title" %>
+            </div>
 
+            <div class="field row">
+                <%= f.label :opinion %>
+                <%= f.text_area :opinion, class:"col-xs-12 book_body" %>
+            </div>
 
-<div class='col-xs-3'>
-<!-- 左上 -->
-  <h2>User info</h2>
-    <table class='table'>
-      <tr><%= attachment_image_tag @book.user, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "no_image.jpg"  %></tr> 
-      <tr>
-        <th>name</th>
-        <th><%= @book.user.name %></th>
-      </tr>
-      <tr>
-        <th>introduction</th>
-        <th><%= @book.user.introduction %></th>
-      </tr>
-    </table>
-
-    <div class='row'>
-      <% if @book.user.id == current_user.id %>
-        <%= link_to "", edit_user_path(current_user), class:"col-xs-12 btn btn-default glyphicon glyphicon-wrench edit_user_#{current_user.id}" %>
-      <% else %>
-        <%= link_to "", user_path(current_user), class:"col-xs-12 btn btn-default glyphicon glyphicon-wrench edit_user_#{current_user.id}" %>
-      <% end %>
-    </div>
-
-<!-- 左下 -->
-<%= render 'books/post', new_book: @new_book %>
-
-  </div>
-
-
-<!-- 右　ブック詳細 -->
-<div class='col-xs-9'>
-  <h2>Book detail</h2>
-
-<table class='table'>
-      <tr>
-        <td>
-          <%= link_to user_path(@book.user.id) do %>
-            <%= attachment_image_tag @book.user, :profile_image, :fill, 100, 100, fallback: "no_image.jpg"  %><br><%= @book.user.name %>
-          <% end %>
-        </td>
-        <td>
-          <%= link_to book_path(@book.id) do %>
-            <%= @book.title %>
-          <% end %>
-        </td>
-        <td><%= @book.opinion %></td>
-        <% if @book.user == current_user %>
-          <td><%= link_to "Edit", edit_book_path(@book.id), class:"btn-sm btn-success edit_book_#{@book.id}" %></td>
-          <td><%= link_to "Destroy", book_path(@book.id), "data-confirm" => "本当に消しますか?", class:"btn-sm btn-danger destroy_book_#{@book.id}", method: :delete %>
-        </td>
+            <div class="actions row">
+                <%= f.submit 'Create Book', class:"btn btn-primary col-xs-12" %>
+            </div>
         <% end %>
-      </tr>
-  
-  </tbody>
-</table>
+        <!-- ↑↑ 左下 ↑↑ -->
+    </div>
+    <!-- ↑↑ 左 ↑↑ -->
 
+    <!-- ↓↓ 右 ↓↓ -->
+    <div class='col-xs-9'>
+        <h2>Book detail</h2>
+
+        <table class='table'>
+            <tr>
+                <td>
+                    <%= link_to user_path(@book.user.id), class:"user_#{@book.user.id}" do %>
+                        <%= attachment_image_tag @book.user, :profile_image, fallback: "no_image.jpg", size: "100x100" %><br><%= @book.user.name %>
+                    <% end %>
+                </td>
+                <td>
+                    <%= link_to book_path(@book.id), class:"book_#{@book.id}" do %>
+                        <%= @book.title %>
+                    <% end %>
+                </td>
+                <td>
+                    <%= @book.opinion %>
+                </td>
+
+                <% if @book.user == current_user %>
+                    <td>
+                        <%= link_to "Edit", edit_book_path(@book.id), class:"btn-sm btn-success edit_book_#{@book.id}" %>
+                    </td>
+                    <td>
+                        <%= link_to "Destroy", book_path(@book.id), "data-confirm" => "本当に消しますか?", class:"btn-sm btn-danger destroy_book_#{@book.id}", method: :delete %>
+                    </td>
+                <% end %>
+            </tr>
+        </table>
+    </div>
+    <!-- ↑↑ 右 ↑↑ -->
 </div>
+<!-- ↑↑ 全体 ↑↑ -->
 
+    </div>
 </div>
-</div>
-
-
-
- 
-
 

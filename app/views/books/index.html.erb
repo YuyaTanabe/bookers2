@@ -3,52 +3,104 @@
 
         <p id="notice"><%= flash.notice %></p>
 
-        <div class='row'>
+    <% if @new_book.errors.any? %>
+        <div id="error_explanation" >
+            <h3><%= pluralize(@new_book.errors.count, "error") %> prohibited this obj from being saved:</h3>
+            <ul>
+                <% @new_book.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                <% end %>
+            </ul>
+        </div>
+    <% end %>
 
-<!-- 左上 -->
-<div class='col-xs-3'>
-<%= render 'users/profile' %>
+<!-- ↓↓全体↓↓ -->
+<div class='row'>
+    <!-- ↓↓左↓↓ -->
+    <div class='col-xs-3'>
+        <!-- ↓↓ 左上 ↓↓ -->
+        <h2>User info</h2>
 
-<!-- 左下 -->
-<%= render 'post', new_book: @new_book %>
+            <table class='table'>
+                <tr>
+                    <%= attachment_image_tag current_user, :profile_image, fallback: "no_image.jpg", size: "100x100" %>
+                </tr>
+                <tr>
+                    <th>name</th>
+                    <th><%= current_user.name %></th>
+                </tr>
+                <tr>
+                    <th>introduction</th>
+                    <th><%= current_user.introduction %></th>
+                </tr>
+            </table>
 
-  </div>
+            <div class='row'>
+                <%= link_to "", edit_user_path(current_user), class:"col-xs-12 btn btn-default glyphicon glyphicon-wrench edit_user_#{current_user.id}" %>
+            </div>
+        <!-- ↑↑ 左上 ↑↑ -->
 
+        <!-- ↓↓ 左下 ↓↓ -->
+        <h2>New book</h2>
+        <%= form_for(@new_book) do |f| %>
+            <div class="field row">
+                <%= f.label :title %>
+                <%= f.text_field :title, class:"col-xs-12 book_title" %>
+            </div>
 
-<!-- 右　投稿一覧 -->
-<div class='col-xs-9'>
-<h2>Books</h2>
+            <div class="field row">
+                <%= f.label :opinion %>
+                <%= f.text_area :opinion, class:"col-xs-12 book_body" %>
+            </div>
 
-<table class='table table-hover table-inverse'>
-  <thead>
-    <tr>
-      <th></th>
-      <th>Title</th>
-      <th>Opinion</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+            <div class="actions row">
+                <%= f.submit 'Create Book', class:"btn btn-primary col-xs-12" %>
+            </div>
+        <% end %>
+        <!-- ↑↑ 左下 ↑↑ -->
+    </div>
+    <!-- ↑↑ 左 ↑↑ -->
 
-  <tbody>
-  <% @books.each do |book| %>
-      <tr>
-        <td><%= attachment_image_tag book.user, :profile_image, :fill, 40, 40, format: 'jpeg', fallback: "no_image.jpg"  %></td>
-        <td>
-          <%= link_to book_path(book.id) do %>
-            <%= book.title %>
-          <% end %>
-        </td>
-        <td><%= book.opinion %></td>
-      </tr>
-  <% end %>
-  </tbody>
-</table>
+    <!-- ↓↓ 右 ↓↓ -->
+    <div class='col-xs-9'>
+        <h2>Books</h2>
 
+        <table class='table table-hover table-inverse'>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Title</th>
+                    <th>Opinion</th>
+                    <th colspan="3"></th>
+                </tr>
+            </thead>
+
+            <tbody>
+            <% @books.each do |book| %>
+                <tr>
+                    <td>
+                        <%= link_to user_path(book.user.id), class:"user_#{book.user.id}" do %>
+                            <%= attachment_image_tag book.user, :profile_image, fallback: "no_image.jpg", size: "50x50" %>
+                        <% end %>
+                    </td>
+                    <td>
+                        <%= link_to book_path(book.id), class:"book_#{book.id}" do %>
+                            <%= book.title %>
+                        <% end %>
+                    </td>
+                    <td>
+                        <%= book.opinion %>
+                    </td>
+                </tr>
+            <% end %>
+            </tbody>
+        </table>
+    </div>
+    <!-- ↑↑ 右 ↑↑ -->
 </div>
+<!-- ↑↑ 全体 ↑↑ -->
 
-</div>
-
-</div>
+    </div>
 </div>
 
 
