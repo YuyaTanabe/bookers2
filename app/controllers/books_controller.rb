@@ -39,7 +39,6 @@ class BooksController < ApplicationController
 
     def destroy
     	@book = Book.find(params[:id])
-        profile_image_id = @book.user_id
      	@book.destroy
     	redirect_to books_path, notice: "Book was successfully destroyed."
     end
